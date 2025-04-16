@@ -3,7 +3,6 @@ from typing import TYPE_CHECKING
 
 from aiogram import Router
 from aiogram.filters import Command
-from aiogram.utils.i18n import gettext as _
 
 from bot.filters.admin import AdminFilter
 from bot.services.users import get_all_users, get_user_count
@@ -26,4 +25,4 @@ async def export_users_handler(message: Message, session: AsyncSession) -> None:
     document: BufferedInputFile = await convert_users_to_csv(all_users)
     count: int = await get_user_count(session)
 
-    await message.answer_document(document=document, caption=_("user counter: <b>{count}</b>").format(count=count))
+    await message.answer_document(document=document, caption="user counter: <b>{count}</b>".format(count=count))

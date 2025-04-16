@@ -1,12 +1,12 @@
 from __future__ import annotations
 import asyncio
 
-from utils.setup_logging import setup_logging
-from core.config import settings
-from core.loader import app, bot, dp
-from handlers import get_handlers_router
-from keyboards.default_commands import remove_default_commands, set_default_commands
-from middlewares import register_middlewares
+from bot.utils.setup_logging import setup_logging
+from bot.core.config import settings
+from bot.core.loader import app, bot, dp
+from bot.handlers import get_handlers_router
+from bot.keyboards.default_commands import remove_default_commands, set_default_commands
+from bot.middlewares import register_middlewares
 
 
 logger = setup_logging()
@@ -18,10 +18,6 @@ async def on_startup() -> None:
     register_middlewares(dp)
 
     dp.include_router(get_handlers_router())
-
-    # if settings.USE_WEBHOOK:
-    #     app.middlewares.append(prometheus_middleware_factory())
-    #     app.router.add_route("GET", "/metrics", MetricsView)
 
     await set_default_commands(bot)
 
@@ -85,7 +81,6 @@ async def setup_webhook() -> None:
 
 
 async def main() -> None:
-
 
     dp.startup.register(on_startup)
     dp.shutdown.register(on_shutdown)

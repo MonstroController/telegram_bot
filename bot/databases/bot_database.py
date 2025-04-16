@@ -11,19 +11,12 @@ if TYPE_CHECKING:
     from sqlalchemy.engine.url import URL
 
 
-class CConnection(Connection):  # type: ignore
-    def _get_unique_id(self, prefix: str) -> str:
-        return f"__asyncpg_{prefix}_{uuid4()}__"
-
 
 def get_engine(url: URL | str = settings.database_url) -> AsyncEngine:
     return create_async_engine(
         url=url,
         echo=settings.DEBUG,
         pool_size=0,
-        connect_args={
-            "connection_class": CConnection,
-        },
     )
 
 

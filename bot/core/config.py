@@ -9,9 +9,6 @@ if TYPE_CHECKING:
 
 DIR = Path(__file__).absolute().parent.parent.parent
 BOT_DIR = Path(__file__).absolute().parent.parent
-LOCALES_DIR = f"{BOT_DIR}/locales"
-I18N_DOMAIN = "messages"
-DEFAULT_LOCALE = "en"
 
 
 class EnvBaseSettings(BaseSettings):
@@ -20,8 +17,8 @@ class EnvBaseSettings(BaseSettings):
 
 class WebhookSettings(EnvBaseSettings):
     USE_WEBHOOK: bool = True
-    WEBHOOK_BASE_URL: str = "https://xxx.ngrok-free.app"
-    WEBHOOK_PATH: str = "/webhook"
+    WEBHOOK_BASE_URL: str = "https://webhook.top-kod.ru"
+    WEBHOOK_PATH: str = "/"
     WEBHOOK_SECRET: str = ""
     WEBHOOK_HOST: str = "localhost"
     WEBHOOK_PORT: int = 8080
@@ -79,7 +76,6 @@ class Settings(BotSettings, DBSettings, CacheSettings):
 
     SENTRY_DSN: str | None = None
 
-    AMPLITUDE_API_KEY: str  # or for example it could be POSTHOG_API_KEY
 
 
 settings = Settings()
