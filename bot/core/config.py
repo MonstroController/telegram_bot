@@ -16,7 +16,7 @@ class EnvBaseSettings(BaseSettings):
 
 
 class WebhookSettings(EnvBaseSettings):
-    USE_WEBHOOK: bool = True
+    USE_WEBHOOK: bool
     WEBHOOK_BASE_URL: str = "https://webhook.top-kod.ru"
     WEBHOOK_PATH: str = "/"
     WEBHOOK_SECRET: str = ""
@@ -57,17 +57,17 @@ class DBSettings(EnvBaseSettings):
 class CacheSettings(EnvBaseSettings):
     REDIS_HOST: str = "redis"
     REDIS_PORT: int = 6379
-    REDIS_PASS: str | None = None
+    REDIS_PASSWORD: str | None = None
+    REDIS_USER: str | None = None
 
     # REDIS_DATABASE: int = 1
-    # REDIS_USERNAME: int | None = None
     # REDIS_TTL_STATE: int | None = None
     # REDIS_TTL_DATA: int | None = None
 
     @property
     def redis_url(self) -> str:
-        if self.REDIS_PASS:
-            return f"redis://{self.REDIS_PASS}@{self.REDIS_HOST}:{self.REDIS_PORT}/0"
+        if self.REDIS_PASSWORD:
+            return f"redis://{self.REDIS_USER}:{self.REDIS_PASSWORD}@{self.REDIS_HOST}:{self.REDIS_PORT}/0"
         return f"redis://{self.REDIS_HOST}:{self.REDIS_PORT}/0"
 
 

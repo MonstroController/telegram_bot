@@ -86,6 +86,7 @@ async def main() -> None:
     dp.shutdown.register(on_shutdown)
 
     if settings.USE_WEBHOOK:
+        print("starting webhook")
         await setup_webhook()
     else:
         await dp.start_polling(bot, allowed_updates=dp.resolve_used_update_types())
