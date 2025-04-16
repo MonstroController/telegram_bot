@@ -28,6 +28,8 @@ services:
     networks:
       - main
     
+volumes:
+  redisdata:
 
 networks:
   main:
