@@ -17,10 +17,10 @@ class EnvBaseSettings(BaseSettings):
 
 class WebhookSettings(EnvBaseSettings):
     USE_WEBHOOK: bool
-    WEBHOOK_BASE_URL: str = "https://api.top-kod.ru"
-    WEBHOOK_PATH: str = "/webhook"
-    WEBHOOK_SECRET: str = ""
-    WEBHOOK_HOST: str = "localhost"
+    WEBHOOK_BASE_URL: str
+    WEBHOOK_PATH: str 
+    WEBHOOK_SECRET: str 
+    WEBHOOK_HOST: str
     WEBHOOK_PORT: int = 8080
 
     @property
