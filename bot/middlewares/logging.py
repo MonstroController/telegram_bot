@@ -3,9 +3,8 @@ from typing import TYPE_CHECKING, Any
 
 from aiogram import BaseMiddleware
 from logging import getLogger
-
-
-
+from functools import partial
+from aiogram.types import Update
 if TYPE_CHECKING:
     from collections.abc import Awaitable, Callable
 
@@ -161,3 +160,20 @@ class LoggingMiddleware(BaseMiddleware):
             self.logger.info(*logger_msg)
 
         return await handler(event, data)
+
+
+# class HandlerLoggerMiddleware(BaseMiddleware):
+#     def __init__(self) -> None:
+#         self.logger = getLogger(__name__)
+#         super().__init__()
+
+#     async def __call__(
+#         self,
+#         handler: Callable[[Update, dict], Awaitable[Any]],
+#         event: Update,
+#         data: dict
+#     ) -> Any:
+
+#         self.logger.info(f"Update: {event}")
+#         self.logger.info(f"Handler: {handler}")
+#         return await handler(event, data)

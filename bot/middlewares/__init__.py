@@ -9,11 +9,11 @@ def register_middlewares(dp: Dispatcher) -> None:
     from .logging import LoggingMiddleware
 
 
-
+    
     dp.update.outer_middleware(LoggingMiddleware())
+    # dp.update.outer_middleware(HandlerLoggerMiddleware())
 
     dp.update.outer_middleware(DatabaseMiddleware())
 
-    dp.message.middleware(AuthMiddleware())
 
     dp.callback_query.middleware(CallbackAnswerMiddleware())

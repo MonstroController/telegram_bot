@@ -3,12 +3,12 @@ from aiogram.utils.keyboard import InlineKeyboardBuilder
 
 
 def main_keyboard() -> InlineKeyboardMarkup:
-    """Use in main menu."""
+    """User main menu."""
     buttons = [
-        [InlineKeyboardButton(text="wallet button", callback_data="wallet")],
-        [InlineKeyboardButton(text="premium button", callback_data="premium")],
-        [InlineKeyboardButton(text="info button", callback_data="info")],
-        [InlineKeyboardButton(text="support button", callback_data="support")],
+        [InlineKeyboardButton(text="Мои проекты", callback_data="projects_main")],
+        [InlineKeyboardButton(text="Настройки", callback_data="settings_main")],
+        [InlineKeyboardButton(text="Информация о боте", callback_data="info_main")],
+        [InlineKeyboardButton(text="Поддержка", callback_data="support_main")],
     ]
 
     keyboard = InlineKeyboardBuilder(markup=buttons)
@@ -16,3 +16,21 @@ def main_keyboard() -> InlineKeyboardMarkup:
     keyboard.adjust(1, 1, 2)
 
     return keyboard.as_markup()
+
+
+def admin_main_keyboard() -> InlineKeyboardMarkup:
+    """Admin main menu."""
+    buttons = [
+        [InlineKeyboardButton(text="Проекты", callback_data="admin_projects_main")],
+        [InlineKeyboardButton(text="Нагул", callback_data="admin_profiles_walk_main")],
+        [InlineKeyboardButton(text="Сервера", callback_data="admin_projects_main")],
+        [InlineKeyboardButton(text="Тестирование", callback_data="admin_testing_main")],
+        [InlineKeyboardButton(text="Общая статистика", callback_data="admin_stats_main")],
+    ]
+
+    keyboard = InlineKeyboardBuilder(markup=buttons)
+
+    keyboard.adjust(2, 1, 1)
+
+    return keyboard.as_markup()
+

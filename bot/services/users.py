@@ -107,6 +107,14 @@ async def get_all_users(session: AsyncSession) -> list[UsersOrm]:
     users = result.scalars()
     return list(users)
 
+@cached(key_builder=lambda session: build_key())
+async def get_all_admins(session: AsyncSession) -> list[UsersOrm]:
+    query = select(UsersOrm).where(UsersOrm.is_admin == True)
+
+    result = await session.execute(query)
+
+    users = result.scalars()
+    return list(users)
 
 @cached(key_builder=lambda session: build_key())
 async def get_user_count(session: AsyncSession) -> int:

@@ -10,16 +10,16 @@ created_at = Annotated[datetime.datetime, mapped_column(server_default=text("now
 updated_at = Annotated[
     datetime.datetime,
     mapped_column(
-        server_default=text("now()"),  # Убираем TIMEZONE
-        onupdate=datetime.datetime.now(),  # Убираем timezone.utc
+        server_default=text("now()"),
+        onupdate=datetime.datetime.now(),
     ),
 ]
 
 
 class Base(DeclarativeBase):
     __abstract__ = True
-    repr_cols_num = 3  # print first columns
-    repr_cols: tuple[str, ...] = ()  # extra printed columns
+    repr_cols_num = 3  
+    repr_cols: tuple[str, ...] = ()
 
     def __repr__(self) -> str:
         cols = [

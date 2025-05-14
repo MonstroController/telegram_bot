@@ -1,7 +1,9 @@
 from __future__ import annotations
 from typing import TYPE_CHECKING
+from bot.services.users import get_all_admins
+from bot.databases.bot_database import sessionmaker
 
-from aiogram.types import BotCommand, BotCommandScopeDefault
+from aiogram.types import BotCommand, BotCommandScopeDefault, BotCommandScopeChat
 
 if TYPE_CHECKING:
     from aiogram import Bot
@@ -34,14 +36,26 @@ admins_commands: dict[str, dict[str, str]] = {
     "en": {
         "ping": "Check bot ping",
         "stats": "Show bot stats",
+        "admin_menu": "menu for admin",
+        "admin_settings": "settings for admin",
+        "menu": "main menu with earning schemes",
+        "settings": "setting information about you",
     },
     "uk": {
         "ping": "Check bot ping",
         "stats": "Show bot stats",
+        "admin_menu": "menu for admin",
+        "admin_settings": "settings for admin",
+        "menu": "main menu with earning schemes",
+        "settings": "setting information about you",
     },
     "ru": {
         "ping": "Check bot ping",
         "stats": "Show bot stats",
+        "admin_menu": "menu for admin",
+        "admin_settings": "settings for admin",
+        "menu": "main menu with earning schemes",
+        "settings": "setting information about you",
     },
 }
 
@@ -56,16 +70,18 @@ async def set_default_commands(bot: Bot) -> None:
             language_code=language_code,
         )
 
-        """ Commands for admins
-        for admin_id in await admin_ids():
+        async with sessionmaker() as session:
+            admins = await get_all_admins(session)
+        #Commands for admins
+        for admin in admins:
+            
             await bot.set_my_commands(
                 [
                     BotCommand(command=command, description=description)
                     for command, description in admins_commands[language_code].items()
                 ],
-                scope=BotCommandScopeChat(chat_id=admin_id),
+                scope=BotCommandScopeChat(chat_id=admin.id),
             )
-        """
 
 
 async def remove_default_commands(bot: Bot) -> None:

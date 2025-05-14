@@ -25,7 +25,10 @@ class AuthMiddleware(BaseMiddleware):
         data: dict[str, Any],
     ) -> Any:
         if not isinstance(event, Message):
+            print(data, event)
             return await handler(event, data)
+    
+        print(data)
 
         session: AsyncSession = data["session"]
         message: Message = event

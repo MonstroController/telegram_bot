@@ -55,7 +55,7 @@ class DBSettings(EnvBaseSettings):
 
 
 class CacheSettings(EnvBaseSettings):
-    REDIS_HOST: str = "redis"
+    REDIS_HOST: str
     REDIS_PORT: int = 6379
     REDIS_PASSWORD: str | None = None
     REDIS_USER: str | None = None
@@ -71,10 +71,19 @@ class CacheSettings(EnvBaseSettings):
         return f"redis://{self.REDIS_HOST}:{self.REDIS_PORT}/0"
 
 
-class Settings(BotSettings, DBSettings, CacheSettings):
+
+class ApiSettings(EnvBaseSettings):
+    API_URL: str = "http://localhost:8000"
+    API_STATS_PATH: str
+    API_MAIN_STATS_PATH: str
+
+
+
+class Settings(BotSettings, DBSettings, CacheSettings, ApiSettings):
     DEBUG: bool = False
 
     SENTRY_DSN: str | None = None
+
 
 
 
