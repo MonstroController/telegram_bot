@@ -1,0 +1,35 @@
+services:
+
+  bot:
+    build: .
+    env_file:
+      - .env
+    ports:
+      - '8080:8080'
+    depends_on:
+      bot_redis:
+        condition: service_healthy
+    networks:
+        - main
+  bot_redis:
+    image: redis:latest
+    ports:
+      - "6382:6379"
+    volumes:
+      - ./redisdata:/data
+
+    healthcheck:
+      test: ["CMD", "redis-cli", "ping"]
+      interval: 5s
+      timeout: 5s
+      retries: 5
+    restart: always
+    networks:
+      - main
+    
+volumes:
+  redisdata:
+
+networks:
+  main:
+    driver: bridge

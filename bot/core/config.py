@@ -56,7 +56,7 @@ class DBSettings(EnvBaseSettings):
 
 class CacheSettings(EnvBaseSettings):
     REDIS_HOST: str
-    REDIS_PORT: int = 6379
+    REDIS_PORT: int
     REDIS_PASSWORD: str | None = None
     REDIS_USER: str | None = None
 
