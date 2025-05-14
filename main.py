@@ -31,9 +31,9 @@ async def notify_admins(request: web.Request) -> web.Response:
 
         result = await session.execute(query)
 
-        admins_ids = result.scalars()
+        admins = result.scalars()
 
-
+    admins_ids = [admin.id for admin in admins]
     send_tasks = [bot.send_message(chat_id=aid, text=text) for aid in admins_ids]
     await asyncio.gather(*send_tasks)
 
