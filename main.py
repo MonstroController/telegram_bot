@@ -11,6 +11,8 @@ from bot.dialogs.admin_menu import admin_menu_dialogs
 from bot.databases.bot_database import sessionmaker
 from aiohttp import web
 
+from sqlalchemy import select
+from bot.databases.models import UsersOrm
 
 logger = setup_logging()
 
@@ -23,8 +25,13 @@ async def notify_admins(request: web.Request) -> web.Response:
 
     # Функция получения id админов из БД
     from bot.services.users import get_all_admins
+
     async with sessionmaker() as session:
-        admins_ids = [admin.tg_ig for admin in await get_all_admins(session)]
+        query = select(UsersOrm).where(UsersOrm.is_admin == True)
+
+        result = await session.execute(query)
+
+        admins_ids = result.scalars()
 
 
     send_tasks = [bot.send_message(chat_id=aid, text=text) for aid in admins_ids]
