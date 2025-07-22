@@ -5,11 +5,14 @@ from sqlalchemy import func, select, update
 
 from bot.cache.redis import build_key, cached, clear_cache
 from bot.databases.models import UsersOrm
+import logging
 
 if TYPE_CHECKING:
     from aiogram.types import User
     from sqlalchemy.ext.asyncio import AsyncSession
 
+
+logger = logging.getLogger(__name__)
 
 async def add_user(
     session: AsyncSession,
@@ -42,6 +45,7 @@ async def add_user(
 @cached(key_builder=lambda session, user_id: build_key(user_id))
 async def user_exists(session: AsyncSession, user_id: int) -> bool:
     """Checks if the user is in the database."""
+    logger.info(f"Check user {user_id} exist")
     query = select(UsersOrm.id).filter_by(id=user_id).limit(1)
 
     result = await session.execute(query)
