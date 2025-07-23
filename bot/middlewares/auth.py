@@ -24,6 +24,11 @@ class AuthMiddleware(BaseMiddleware):
         event: TelegramObject,
         data: dict[str, Any],
     ) -> Any:
+        logger.info(f"Start auth middleware: {type(event)}")
+        logger.info(f"Event: {event.message}")
+        if not isinstance(event, Message):
+            return await handler(event, data)
+    
 
         session: AsyncSession = data["session"]
         message: Message = event
@@ -32,7 +37,7 @@ class AuthMiddleware(BaseMiddleware):
         if not user:
             return await handler(event, data)
 
-        logger.info(f"3 auth middleware: {message.from_user.id}")
+        logger.info(f"23 auth middleware: {message.from_user}")
         if await user_exists(session, user.id):
             return await handler(event, data)
 
