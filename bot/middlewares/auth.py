@@ -29,7 +29,7 @@ class AuthMiddleware(BaseMiddleware):
             return await handler(event, data)
     
         session: AsyncSession = data["session"]
-        message: Message = event.message
+        message: Message = event
         logger.info(f"Message: {message}")
         logger.info(f"2 auth middleware: {message.from_user}")
         # if not user:
