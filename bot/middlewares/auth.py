@@ -25,13 +25,11 @@ class AuthMiddleware(BaseMiddleware):
         data: dict[str, Any],
     ) -> Any:
         logger.info(f"Start auth middleware: {type(event)}")
-        logger.info(f"Event: {event.message}")
-        if not isinstance(event, Message):
+        if not hasattr(event, "message"):
             return await handler(event, data)
     
-
         session: AsyncSession = data["session"]
-        message: Message = event
+        message: Message = event.message
         user = message.from_user
         logger.info(f"2 auth middleware: {message.from_user}")
         if not user:
